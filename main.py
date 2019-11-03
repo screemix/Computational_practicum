@@ -79,7 +79,7 @@ def plotMethods(exact, euler, improved, runge_kutta, f, a):
     line3, = a.plot(improved)
     line4, = a.plot(runge_kutta)
     a.legend([line1, line2, line3, line4],
-               ['Exact solution', 'Euler method', 'Improved Euler method', 'Runge-Kutta method'])
+               ['Exact solution', 'Euler method', 'Improved Euler method', 'Runge-Kutta method'], loc=4, prop={'size': 4})
     dataPlot.show()
     dataPlot.get_tk_widget().pack(side=RIGHT, fill=BOTH, expand=1)
 
@@ -88,7 +88,7 @@ def plotErrors(error1, error2, error3, f, a):
     err_line2, = a.plot(error2)
     err_line3, = a.plot(error3)
     a.legend([err_line1, err_line2, err_line3],
-                ['Euler method error', 'Improved Euler method error', 'Runge-Kutta method error'])
+                ['Euler method error', 'Improved Euler method error', 'Runge-Kutta method error'],  loc=4, prop={'size': 4})
     dataPlot2.show()
     dataPlot2.get_tk_widget().pack(side=RIGHT, fill=BOTH, expand=1)
 
