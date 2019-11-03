@@ -4,7 +4,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 from tkinter import *
 
-x0, y0, X, n = 0, 1, 7, 100
+x0, y0, X, n = -100, 1, 20, 1000
 
 #---------------------------functions part---------------------------#
 
@@ -12,15 +12,10 @@ def f(x, y):
     return 1/cos(x) - y * tan(x)
 
 def const(x, y):
-    return (y - sin(x))/cos(x)
+    return y*cos(x) - x
 
 def y(x):
-    return const(x0, y0) * cos(x) + sin(x)
-
-def input():
-    x0 = int(x0_entry.get())
-    y0 = int(y0_entry.get())
-    X = int(X_entry.get())
+    return const(x0, y0)/cos(x) + x/cos(x)
 
 def exact_solution(x0, y0, X, n):
     step = (X - x0)/n
@@ -45,9 +40,9 @@ def improved_euler_method(x0, y0, b, n):
         x.append(x0 + i * h)
     y = [y0]
     for i in range(1, n):
-        k1 = f(x[i - 1], y[i - 1])
-        k2 = f(x[i - 1] + h, y[i - 1] + h * k1)
-        y.append(y[i - 1] + (h / 2) * (k1 + k2))
+        k1 = f(x[i - 1], y[i - 1]) * h
+        k2 = f(x[i - 1] + h, y[i - 1] + k1)*h
+        y.append(y[i-1] + (k2+k1)/2)
     return y
 
 def runge_kutta_method(x0, y0, b, n):
@@ -78,68 +73,68 @@ def investigate_convergence(error):  # check if any error doesn't tend to 0, in 
             return
     print(" is convergent.")
 
-def plotMethods(exact, euler, improved, runge_kutta, f):
-    a3 = f.add_subplot(111)
-    line1, = a3.plot(exact)
-    line2, = a3.plot(euler)
-    line3, = a3.plot(improved)
-    line4, = a3.plot(runge_kutta)
-    a3.legend([line1, line2, line3, line4],
+def plotMethods(exact, euler, improved, runge_kutta, f, a):
+    line1, = a.plot(exact)
+    line2, = a.plot(euler)
+    line3, = a.plot(improved)
+    line4, = a.plot(runge_kutta)
+    a.legend([line1, line2, line3, line4],
                ['Exact solution', 'Euler method', 'Improved Euler method', 'Runge-Kutta method'])
-    dataPlot3 = FigureCanvasTkAgg(f, master=master)
-    dataPlot3.show()
-    dataPlot3.get_tk_widget().pack(side=RIGHT, fill=BOTH, expand=1)
+    dataPlot.show()
+    dataPlot.get_tk_widget().pack(side=RIGHT, fill=BOTH, expand=1)
 
-def plotErrors(error1, error2, error3, f):
-    a = f.add_subplot(111)
+def plotErrors(error1, error2, error3, f, a):
     err_line1, = a.plot(error1)
     err_line2, = a.plot(error2)
     err_line3, = a.plot(error3)
     a.legend([err_line1, err_line2, err_line3],
                 ['Euler method error', 'Improved Euler method error', 'Runge-Kutta method error'])
-    dataPlot = FigureCanvasTkAgg(f, master=master)
-    dataPlot.show()
-    dataPlot.get_tk_widget().pack(side=RIGHT, fill=BOTH, expand=1)
+    dataPlot2.show()
+    dataPlot2.get_tk_widget().pack(side=RIGHT, fill=BOTH, expand=1)
 
+def input():
+    x0 = int(x0_entry.get())
+    y0 = int(y0_entry.get())
+    X = int(X_entry.get())
+    n = int(n_entry.get())
 
-#---------------------------plotting part---------------------------#
+    plotMethods(exact, euler, improved, runge_kutta, f, a)
+    plotErrors(error1, error2, error3, f2, a2)
+
+#---------------------------main part---------------------------#
 
 master = Tk()
 
 f_top = Frame()
+f_mid = Frame()
 f_bot = Frame()
 master.title("Computational methods")
 
 x0_entry = Entry(f_top, width=15)
 y0_entry = Entry(f_top, width=15)
 X_entry = Entry(f_top, width=15)
+n_entry = Entry(f_top, width=15)
 
+x0_label = Label(f_mid, width=15, text = "enter x0")
+y0_label = Label(f_mid, width=15, text = "enter y0")
+X_label = Label(f_mid, width=15, text = "enter X")
+n_label = Label(f_mid, width=15, text = "enter n")
 
-button = Button(f_bot, width=45, text="Submit", command=input)
+button = Button(f_bot, width=60, text="Submit", command=input)
 
 f_top.pack()
+f_mid.pack()
 f_bot.pack()
 
 x0_entry.pack(side=LEFT)
 y0_entry.pack(side=LEFT)
 X_entry.pack(side=LEFT)
+n_entry.pack(side=LEFT)
+x0_label.pack(side=LEFT)
+y0_label.pack(side=LEFT)
+X_label.pack(side=LEFT)
+n_label.pack(side=LEFT)
 button.pack()
-
-cvar1 = BooleanVar()
-cvar1.set(0)
-c1 = Checkbutton(text="First", variable=cvar1, onvalue=1, offvalue=0)
-c1.pack()
-
-cvar2 = BooleanVar()
-cvar2.set(0)
-c2 = Checkbutton(text="Second", variable=cvar2, onvalue=1, offvalue=0)
-c2.pack()
-
-cvar3 = BooleanVar()
-cvar3.set(0)
-c3 = Checkbutton(text="Third", variable=cvar3, onvalue=1, offvalue=0)
-c3.pack()
-
 
 exact = exact_solution(x0, y0, X, n)
 euler = euler_method(x0, y0, X, n)
@@ -152,22 +147,10 @@ error3 = compute_error(exact, runge_kutta)
 
 
 f = Figure(figsize=(2,2), dpi=200)
-f2 = Figure(figsize=(2,2), dpi=200)
-f3 = Figure(figsize=(2,2), dpi=200)
-
 a = f.add_subplot(111)
-
-t = arange(-10.0,10.0,0.01)
-s = [sin(i)+cos(i)*10 for i in t]
-a.plot(t,s)
-
 dataPlot = FigureCanvasTkAgg(f, master=master)
+f2 = Figure(figsize=(2,2), dpi=200)
+a2 = f2.add_subplot(111)
+dataPlot2 = FigureCanvasTkAgg(f2, master=master)
 
-dataPlot.show()
-dataPlot.get_tk_widget().pack(side=LEFT, fill=BOTH, expand=1)
-
-
-
-plotMethods(exact, euler, improved, runge_kutta, f3)
-plotErrors(error1, error2, error3, f2)
 master.mainloop()

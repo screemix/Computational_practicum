@@ -1,4 +1,4 @@
-import math
+from math import*
 import matplotlib
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
@@ -26,11 +26,10 @@ def cnt():  # function that takes values which user entered after pressing 'cont
 
 
 def f(x, y):
-    return 2 * (math.sqrt(y) + y)
-
+    return 1 / cos(x) - y * tan(x)
 
 def y(x):
-    return (pow(math.e, x) * 2 - 1) * (pow(math.e, x) * 2 - 1)
+    return 1/ cos(x) + x / cos(x)
 
 
 def exact_solution(x0, y0, b, n):
