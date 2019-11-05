@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb4605a4-ca41-4d94-b45b-6c5e22e14608" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/methods.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/plotting.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/button_label_entry.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/classes.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/events.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/implementation.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/radio&amp;checkbutton.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/try1.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-    </list>
+    <list default="true" id="eb4605a4-ca41-4d94-b45b-6c5e22e14608" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
