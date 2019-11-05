@@ -25,8 +25,8 @@ def input():
     g_error = global_error(x0, y0, X, n0, n1)
 
     plotMethods(exact, euler, improved, runge_kutta, f1, a, dataPlot1, x0, X)
-    plotErrors(error1, error2, error3, f2, a2, exact, dataPlot2, x0, X)
-    plot_total_errors(g_error[0], g_error[1], g_error[2], f3, a3, dataPlot3, n0, n1)
+    plotErrors(error1, error2, error3, f1, a2, exact, dataPlot1, x0, X)
+    plot_total_errors(g_error[0], g_error[1], g_error[2], f1, a3, dataPlot1, n0, n1)
 
 master = Tk()
 
@@ -70,16 +70,11 @@ N0_label.pack(side=LEFT)
 N1_label.pack(side=LEFT)
 button.pack()
 
-f1 = Figure(figsize=(2,2), dpi=200)
-a = f1.add_subplot(111)
+f1 = Figure(figsize=(2,2), dpi=300)
+a = f1.add_subplot(131)
+a2 = f1.add_subplot(132)
+a3 = f1.add_subplot(133)
+
 dataPlot1 = FigureCanvasTkAgg(f1, master=master)
-
-f2 = Figure(figsize=(2,2), dpi=200)
-a2 = f2.add_subplot(111)
-dataPlot2 = FigureCanvasTkAgg(f2, master=master)
-
-f3 = Figure(figsize=(2,2), dpi=200)
-a3 = f3.add_subplot(111)
-dataPlot3 = FigureCanvasTkAgg(f3, master=master)
-
+master.geometry('1200x800')
 master.mainloop()

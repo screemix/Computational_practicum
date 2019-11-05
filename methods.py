@@ -55,7 +55,7 @@ def compute_error(method1, method2):  # compute difference between numerical met
     m = len(method1)
     answer = m * [0]
     for i in range(m):
-        answer[i] = method1[i] - method2[i]
+        answer[i] = abs(method1[i] - method2[i])
     return answer
 
 def global_error(x0, y0, X, n1, n2):
