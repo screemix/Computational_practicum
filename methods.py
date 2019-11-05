@@ -58,11 +58,25 @@ def compute_error(method1, method2):  # compute difference between numerical met
         answer[i] = method1[i] - method2[i]
     return answer
 
-def investigate_convergence(error):  # check if any error doesn't tend to 0, in that case method is not convergent
-    for element in error:
-        if round(element) != 0:
-            print(" is not convergent.")
-            return
-    print(" is convergent.")
+def global_error(x0, y0, X, n1, n2):
+    total_errors_e = []  # Euler
+    total_errors_ie = []  # Improved Euler
+    total_errors_rk = []  # Runge-Kutta
+    for i in range(n1, n2+1):
+        # values of exact solution and numerical methods when we use i computational steps
+        exact_i = exact_solution(x0, y0, X, i)
+        euler_i = euler_method(x0, y0, X, i)
+        improved_i = improved_euler_method(x0, y0, X, i)
+        runge_kutta_i = runge_kutta_method(x0, y0, X, i)
 
+        # compute their errors
+        error1_i = compute_error(exact_i[1], euler_i[1])
+        error2_i = compute_error(exact_i[1], improved_i[1])
+        error3_i = compute_error(exact_i[1], runge_kutta_i[1])
 
+        # append average values of errors
+        total_errors_e.append(max(map(abs, error1_i)))
+        total_errors_ie.append(max(map(abs, error2_i)))
+        total_errors_rk.append(max(map(abs, error3_i)))
+
+    return [total_errors_e, total_errors_ie, total_errors_rk]
