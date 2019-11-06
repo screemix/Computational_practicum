@@ -80,3 +80,5 @@ def global_error(x0, y0, X, n1, n2):
         total_errors_rk.append(max(map(abs, error3_i)))
 
     return [total_errors_e, total_errors_ie, total_errors_rk]
+
+

@@ -8,3 +8,5 @@ def const(x, y):
 
 def y(x, x0, y0):
     return sin(x) + const(x0, y0)*cos(x)
+
+
